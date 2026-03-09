@@ -1,0 +1,79 @@
+{
+    "schema_version": "1.0",
+    "base_url_pattern": "https://{github_user}.github.io/{repo_name}",
+    "github_user": "malphons",
+    "spokes": [
+        {
+            "id": "fnd-noise",
+            "repo_name": "se-zoo-fnd-noise",
+            "group": "foundations",
+            "category": "noise",
+            "label": "Sensor Noise",
+            "enabled": true
+        },
+        {
+            "id": "fnd-differentiation",
+            "repo_name": "se-zoo-fnd-differentiation",
+            "group": "foundations",
+            "category": "differentiation",
+            "label": "Numerical Derivatives",
+            "enabled": true
+        },
+        {
+            "id": "fnd-model-observer",
+            "repo_name": "se-zoo-fnd-model-observer",
+            "group": "foundations",
+            "category": "model-observer",
+            "label": "Model-Based Observers",
+            "enabled": true
+        },
+        {
+            "id": "opt-linear-filter",
+            "repo_name": "se-zoo-opt-linear-filter",
+            "group": "optimal-filtering",
+            "category": "linear-filter",
+            "label": "Linear Kalman",
+            "enabled": true
+        },
+        {
+            "id": "opt-nonlinear-filter",
+            "repo_name": "se-zoo-opt-nonlinear-filter",
+            "group": "optimal-filtering",
+            "category": "nonlinear-filter",
+            "label": "Nonlinear Kalman",
+            "enabled": true
+        },
+        {
+            "id": "opt-sensor-fusion",
+            "repo_name": "se-zoo-opt-sensor-fusion",
+            "group": "optimal-filtering",
+            "category": "sensor-fusion",
+            "label": "Sensor Fusion",
+            "enabled": true
+        },
+        {
+            "id": "adv-observability",
+            "repo_name": "se-zoo-adv-observability",
+            "group": "advanced-topics",
+            "category": "observability",
+            "label": "Observability",
+            "enabled": true
+        },
+        {
+            "id": "adv-force-estimation",
+            "repo_name": "se-zoo-adv-force-estimation",
+            "group": "advanced-topics",
+            "category": "force-estimation",
+            "label": "Force Estimation",
+            "enabled": true
+        },
+        {
+            "id": "adv-particle-filter",
+            "repo_name": "se-zoo-adv-particle-filter",
+            "group": "advanced-topics",
+            "category": "particle-filter",
+            "label": "Particle Methods",
+            "enabled": true
+        }
+    ]
+}

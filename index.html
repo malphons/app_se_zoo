@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State Estimation Zoo — Interactive Digital Twins for Robot State Inference</title>
+    <meta name="description" content="Nine interactive digital twins teaching state estimation from noisy sensors to particle filters, with D3 visualizations and KaTeX equations.">
+    <link rel="stylesheet" href="css/zoo.css">
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/deep-dives.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+          crossorigin="anonymous">
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+</head>
+<body>
+    <div class="zoo-container">
+
+        <!-- ===== Header ===== -->
+        <header class="zoo-header">
+            <a href="./" class="zoo-header__brand">
+                <img src="assets/logo.svg" alt="SE Zoo" class="zoo-header__logo">
+                <div>
+                    <div class="zoo-header__title">SE Zoo</div>
+                    <div class="zoo-header__subtitle">Interactive Digital Twins</div>
+                </div>
+            </a>
+            <div class="zoo-header__actions">
+                <a href="https://github.com/malphons" target="_blank" rel="noopener"
+                   style="color:var(--text-secondary);display:flex" title="GitHub">
+                    <svg width="22" height="22" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+                        0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15
+                        -.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87
+                        .51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12
+                        0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82
+                        2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65
+                        3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013
+                        0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                </a>
+                <button class="zoo-theme-toggle" title="Toggle theme"></button>
+            </div>
+        </header>
+
+        <!-- ===== Hero ===== -->
+        <section class="zoo-hero">
+            <h1 class="zoo-hero__title">The State Estimation Zoo</h1>
+            <p class="zoo-hero__desc">
+                From noisy sensors to particle filters &mdash; nine interactive digital twins
+                that build intuition for reconstructing a robot's internal state.
+                Each module pairs a 3D robot visualization with a core estimation concept.
+            </p>
+        </section>
+
+        <!-- ===== Dependency Graph (Visual Banner) ===== -->
+        <section class="zoo-dependency-graph" id="dependency-graph">
+            <div class="zoo-dependency-graph__label">Module Dependency Flow</div>
+            <div class="zoo-dependency-graph__container"></div>
+        </section>
+
+        <!-- ===== Search & Filters ===== -->
+        <section class="zoo-search">
+
+            <!-- Difficulty group filter -->
+            <div class="zoo-task-filters">
+                <span class="zoo-task-filters__label">Difficulty:</span>
+                <button class="zoo-task-pill zoo-task-pill--active" data-task="all">All</button>
+                <button class="zoo-task-pill zoo-task-pill--foundations" data-task="foundations">
+                    <span class="zoo-difficulty-dot zoo-difficulty-dot--beginner"></span>Beginner
+                </button>
+                <button class="zoo-task-pill zoo-task-pill--optimal-filtering" data-task="optimal-filtering">
+                    <span class="zoo-difficulty-dot zoo-difficulty-dot--intermediate"></span>Intermediate
+                </button>
+                <button class="zoo-task-pill zoo-task-pill--advanced-topics" data-task="advanced-topics">
+                    <span class="zoo-difficulty-dot zoo-difficulty-dot--advanced"></span>Advanced
+                </button>
+            </div>
+
+            <!-- Search bar -->
+            <div class="zoo-search__bar">
+                <svg class="zoo-search__icon" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="M21 21l-4.35-4.35"/>
+                </svg>
+                <input type="text" class="zoo-search__input"
+                       placeholder="Search modules, tags, concepts...">
+            </div>
+
+            <!-- Category filter pills (rendered by JS) -->
+            <div class="zoo-filters"></div>
+
+            <!-- Results bar -->
+            <div class="zoo-search__results">
+                <span class="zoo-search__count">Loading...</span>
+                <div class="zoo-search__actions">
+                    <button class="zoo-view-toggle" data-view="grid" title="Grid view">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="3" y="3" width="7" height="7" rx="1"/>
+                            <rect x="14" y="3" width="7" height="7" rx="1"/>
+                            <rect x="3" y="14" width="7" height="7" rx="1"/>
+                            <rect x="14" y="14" width="7" height="7" rx="1"/>
+                        </svg>
+                    </button>
+                    <button class="zoo-view-toggle" data-view="grouped" title="Grouped view">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="3" y="3" width="18" height="3" rx="1"/>
+                            <rect x="3" y="9" width="18" height="3" rx="1"/>
+                            <rect x="3" y="15" width="18" height="3" rx="1"/>
+                            <rect x="3" y="21" width="12" height="3" rx="1"/>
+                        </svg>
+                    </button>
+                    <select class="zoo-search__sort">
+                        <option value="name">Sort: A-Z</option>
+                        <option value="year-asc">Sort: Oldest first</option>
+                        <option value="year-desc">Sort: Newest first</option>
+                        <option value="complexity">Sort: Difficulty</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Card Grid ===== -->
+        <main class="zoo-grid"></main>
+
+        <!-- ===== Module Deep Dives ===== -->
+        <section class="zoo-deep-dives" id="deep-dives">
+            <div class="zoo-deep-dives__header">
+                <h2 class="zoo-deep-dives__title">Module Deep Dives</h2>
+                <p class="zoo-deep-dives__subtitle">Key equations and concepts behind each module</p>
+            </div>
+
+            <!-- E07: Observability & Excitation -->
+            <details class="zoo-dive" id="dive-e07" open>
+                <summary class="zoo-dive__summary">
+                    <span class="zoo-dive__module-id" style="color:#f85149">E07</span>
+                    <span class="zoo-dive__name">Observability &amp; Excitation</span>
+                    <span class="zoo-dive__chevron"></span>
+                </summary>
+                <div class="zoo-dive__body">
+                    <div class="zoo-dive__overview">
+                        <p>
+                            A 3-DOF planar arm has six internal states &mdash; three joint angles and
+                            three angular velocities &mdash; but only position sensors on joints 1 and 3.
+                            Can we reconstruct the full state from these partial measurements?
+                            The answer depends on both the system dynamics and the trajectory the robot follows.
+                        </p>
+                        <p>
+                            The <strong>observability Gramian</strong> quantifies how much information each
+                            trajectory injects into the estimation problem. Its eigenvalues reveal which
+                            state-space directions are well-observed and which remain hidden.
+                            A well-excited trajectory produces a well-conditioned Gramian; a poor
+                            trajectory leaves some eigenvalues near zero, making estimation fragile or impossible.
+                        </p>
+                    </div>
+
+                    <div class="zoo-dive__equations">
+                        <h3>State-Space Model</h3>
+                        <p>
+                            The discrete-time linearized model for a 3-DOF arm with damping
+                            and cross-coupling:
+                        </p>
+                        <div class="zoo-dive__math-block">
+                            $$\mathbf{x}_{k+1} = A\,\mathbf{x}_k, \qquad \mathbf{y}_k = C\,\mathbf{x}_k$$
+                        </div>
+                        <p>
+                            where the state vector is
+                            <span class="zoo-dive__math-inline">\(\mathbf{x} = [q_1,\; q_2,\; q_3,\; \dot{q}_1,\; \dot{q}_2,\; \dot{q}_3]^\top \in \mathbb{R}^6\)</span>
+                            and the output
+                            <span class="zoo-dive__math-inline">\(\mathbf{y} \in \mathbb{R}^2\)</span>
+                            measures joints 1 and 3 positions only.
+                        </p>
+
+                        <h3>System Matrices</h3>
+                        <p>The transition matrix encodes position integration, velocity damping, and cross-coupling:</p>
+                        <div class="zoo-dive__math-block">
+                            $$A = \begin{bmatrix} I_3 & \Delta t \cdot I_3 \\ 0 & (1 - d\,\Delta t)\,I_3 + \Delta t\,S \end{bmatrix}, \qquad C = \begin{bmatrix} 1 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 & 0 & 0 \end{bmatrix}$$
+                        </div>
+                        <p>
+                            where <span class="zoo-dive__math-inline">\(d\)</span> is the damping coefficient
+                            and <span class="zoo-dive__math-inline">\(S\)</span> is a skew-symmetric coupling matrix
+                            with coupling constant <span class="zoo-dive__math-inline">\(\alpha\)</span>.
+                        </p>
+
+                        <h3>Observability Matrix</h3>
+                        <p>Stack successive powers of <span class="zoo-dive__math-inline">\(A\)</span> through the output map:</p>
+                        <div class="zoo-dive__math-block">
+                            $$\mathcal{O} = \begin{bmatrix} C \\ CA \\ CA^2 \\ \vdots \\ CA^{n-1} \end{bmatrix} \in \mathbb{R}^{pn \times n}$$
+                        </div>
+                        <p>
+                            The pair <span class="zoo-dive__math-inline">\((A, C)\)</span> is <strong>observable</strong>
+                            if and only if
+                            <span class="zoo-dive__math-inline">\(\text{rank}(\mathcal{O}) = n\)</span>.
+                        </p>
+
+                        <h3>Observability Gramian</h3>
+                        <p>
+                            For a finite horizon of <span class="zoo-dive__math-inline">\(N\)</span> time steps,
+                            the empirical observability Gramian is:
+                        </p>
+                        <div class="zoo-dive__math-block">
+                            $$W_o = \sum_{k=0}^{N-1} \left(C\,A^k\right)^\top \left(C\,A^k\right) \;\in\; \mathbb{R}^{n \times n}$$
+                        </div>
+                        <p>
+                            This positive-semidefinite matrix captures how much "information energy"
+                            flows from each state direction into the measurements over the trajectory.
+                        </p>
+
+                        <h3>Eigendecomposition &amp; Conditioning</h3>
+                        <p>Decompose the Gramian into principal observability directions:</p>
+                        <div class="zoo-dive__math-block">
+                            $$W_o = V \Lambda V^\top, \qquad \Lambda = \text{diag}(\lambda_1, \lambda_2, \dots, \lambda_n)$$
+                        </div>
+                        <p>The condition number measures estimation difficulty:</p>
+                        <div class="zoo-dive__math-block">
+                            $$\kappa(W_o) = \frac{\lambda_{\max}}{\lambda_{\min}}$$
+                        </div>
+
+                        <div class="zoo-dive__interpretation">
+                            <h3>Interpretation Guide</h3>
+                            <table class="zoo-dive__table">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Good Excitation</th>
+                                        <th>Poor Excitation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Effective Rank</td>
+                                        <td><span class="zoo-dive__math-inline">\(= n\)</span> (full)</td>
+                                        <td><span class="zoo-dive__math-inline">\(&lt; n\)</span> (deficient)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="zoo-dive__math-inline">\(\kappa(W_o)\)</span></td>
+                                        <td><span class="zoo-dive__math-inline">\(\sim 10^1 \text{&ndash;} 10^3\)</span></td>
+                                        <td><span class="zoo-dive__math-inline">\(\gt 10^{10}\)</span> or <span class="zoo-dive__math-inline">\(\infty\)</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="zoo-dive__math-inline">\(\lambda_{\min}\)</span></td>
+                                        <td>Bounded away from 0</td>
+                                        <td><span class="zoo-dive__math-inline">\(\approx 0\)</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Estimation quality</td>
+                                        <td>All states recoverable</td>
+                                        <td>Some states unobservable</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+        </section>
+
+        <!-- ===== Legend ===== -->
+        <section class="zoo-legend">
+            <div class="zoo-legend__title">Visual Legend</div>
+            <div class="zoo-legend__items">
+                <div class="zoo-legend__item">
+                    <span class="zoo-legend__swatch" style="background:#f0c808"></span>
+                    <span>Sensor / Input</span>
+                </div>
+                <div class="zoo-legend__item">
+                    <span class="zoo-legend__swatch" style="background:#3fb950"></span>
+                    <span>State / Hidden</span>
+                </div>
+                <div class="zoo-legend__item">
+                    <span class="zoo-legend__swatch" style="background:#58a6ff"></span>
+                    <span>Estimate</span>
+                </div>
+                <div class="zoo-legend__item">
+                    <span class="zoo-legend__swatch" style="background:#f85149"></span>
+                    <span>Error / Noise</span>
+                </div>
+                <div class="zoo-legend__item">
+                    <span class="zoo-legend__swatch" style="background:#f0883e"></span>
+                    <span>Output / Measurement</span>
+                </div>
+                <div class="zoo-legend__item">
+                    <span class="zoo-legend__swatch" style="background:#bc8cff"></span>
+                    <span>Model / Prediction</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Footer ===== -->
+        <footer class="zoo-footer">
+            State Estimation Zoo &mdash; Interactive Digital Twins for Robot State Inference
+        </footer>
+
+    </div>
+
+    <!-- Scripts (order matters: registry -> gallery -> search -> app) -->
+    <script src="js/registry.js"></script>
+    <script src="js/gallery.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- KaTeX (for Module Deep Dives equations) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+            crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+            crossorigin="anonymous"
+            onload="renderMathInElement(document.getElementById('deep-dives'), {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '\\(', right: '\\)', display: false}
+                ],
+                throwOnError: false
+            });"></script>
+</body>
+</html>

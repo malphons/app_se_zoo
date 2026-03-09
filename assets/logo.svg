@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- SE Zoo Logo: Stylized state estimation icon -->
+  <!-- Outer ring (measurement uncertainty) -->
+  <circle cx="24" cy="24" r="22" stroke="#58a6ff" stroke-width="1.5" opacity="0.3" stroke-dasharray="4 3"/>
+  <!-- Inner ellipse (covariance) -->
+  <ellipse cx="24" cy="24" rx="14" ry="9" stroke="#58a6ff" stroke-width="2" opacity="0.6" transform="rotate(-25 24 24)"/>
+  <!-- True state dot (green) -->
+  <circle cx="22" cy="22" r="3.5" fill="#3fb950" opacity="0.9"/>
+  <!-- Estimate dot (blue) -->
+  <circle cx="26" cy="26" r="3" fill="#58a6ff" opacity="0.8"/>
+  <!-- Correction arrow (from estimate toward true) -->
+  <line x1="25.5" y1="25.5" x2="23" y2="23" stroke="#f0883e" stroke-width="1.5" opacity="0.7"/>
+  <polygon points="23,23 24.2,24 23.8,22.5" fill="#f0883e" opacity="0.7"/>
+  <!-- Sensor measurement dots (noisy, scattered) -->
+  <circle cx="18" cy="18" r="1.5" fill="#f0c808" opacity="0.4"/>
+  <circle cx="30" cy="20" r="1.5" fill="#f0c808" opacity="0.4"/>
+  <circle cx="20" cy="30" r="1.5" fill="#f0c808" opacity="0.4"/>
+  <circle cx="28" cy="28" r="1.2" fill="#f0c808" opacity="0.3"/>
+  <circle cx="16" cy="25" r="1.2" fill="#f0c808" opacity="0.3"/>
+</svg>
